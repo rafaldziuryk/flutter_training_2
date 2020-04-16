@@ -21,7 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       },
     );
     dio = new Dio(options);
-    dio.interceptors.add(LogInterceptor(responseBody: true)); //开启请求日志
+    dio.interceptors.add(LogInterceptor(responseBody: true));
   }
 
   @override

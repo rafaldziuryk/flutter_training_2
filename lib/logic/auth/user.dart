@@ -11,6 +11,10 @@ class User {
   @JsonKey(name: "address")
   final String rawRoles;
 
+  List<String> get roles => rawRoles.split(",");
+
+  bool hasRole(String role) => roles.contains(role);
+
   User({this.firstName, this.lastName, this.rawRoles});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
