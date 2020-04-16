@@ -25,17 +25,19 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => loginBloc,
-      child: BlocListener<LoginBloc, LoginState>(
-        listener: (BuildContext context, LoginState state) {
-          if (state is LoginSuccess) {
-            Navigator.of(context).pop();
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text("Logowanie"),
-          ),
-          body: SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Logowanie"),
+        ),
+        body: BlocListener<LoginBloc, LoginState>(
+          listener: (BuildContext context, LoginState state) {
+            if (state is LoginSuccess) {
+              Navigator.of(context).pop();
+            } else if (state is LoginError) {
+              Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.errorMessage),));
+            }
+          },
+          child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Center(
@@ -71,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     BlocBuilder<LoginBloc, LoginState>(
                       builder: (BuildContext context, LoginState state) {
-                        if (state is InitialLoginState) {
+                        if (state is InitialLoginState || state is LoginError) {
                           return Container(
                             height: 50.0,
                             decoration: BoxDecoration(
