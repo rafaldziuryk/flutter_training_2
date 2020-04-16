@@ -27,7 +27,8 @@ class _HomePageState extends State<HomePage> {
                   if (state is LoggedInAuthState) {
                     return ListTile(
                         leading: Icon(Icons.person),
-                        title: Text("Wyloguj"),
+                        title: Text("Zalogowano: ${state.user.firstName}"),
+                        subtitle: Text("Kliknij, aby wylogować"),
                         onTap: () {
                           BlocProvider.of<AuthBloc>(context).add(LogOutAuthEvent());
                         });

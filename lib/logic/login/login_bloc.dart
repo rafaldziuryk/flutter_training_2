@@ -43,8 +43,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         Response response = await dio.get("/users?first_name=$name&last_name=$lastName");
         if (response.data["_meta"]["success"] == true) {
           if (response.data["result"].isNotEmpty) {
+            User user = User.fromJson(response.data["result"][0]);
             yield LoginSuccess();
-            authBloc.add(LogInAuthEvent(User()));
+            authBloc.add(LogInAuthEvent(user));
           } else {
             yield LoginError("Niepoprawne dane logowania");
           }

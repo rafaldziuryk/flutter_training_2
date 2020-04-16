@@ -17,7 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Stream<AuthState> loginEvent(User user) async* {
-    yield LoggedInAuthState();
+    yield LoggedInAuthState(user);
   }
 
   Stream<AuthState> logOutEvent() async* {
