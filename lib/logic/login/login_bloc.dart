@@ -1,8 +1,16 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:fluttertrainer2/logic/auth/auth_bloc.dart';
+import 'package:fluttertrainer2/logic/auth/auth_event.dart';
+import 'package:fluttertrainer2/logic/auth/bloc.dart';
 import './bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+
+  AuthBloc authBloc;
+
+  LoginBloc(this.authBloc);
+
   @override
   LoginState get initialState => InitialLoginState();
 
@@ -19,5 +27,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     yield LoginInProgress();
     await Future.delayed(Duration(seconds: 2), () => true);
     yield LoginSuccess();
+    authBloc.add(LogInAuthEvent(User()));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertrainer2/logic/auth/auth_bloc.dart';
 import 'package:fluttertrainer2/logic/login/bloc.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,7 +16,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    loginBloc = LoginBloc();
+    AuthBloc authBloc = BlocProvider.of<AuthBloc>(context);
+    loginBloc = LoginBloc(authBloc);
     super.initState();
   }
 
