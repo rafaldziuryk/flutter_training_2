@@ -21,3 +21,9 @@ class LogOutAuthEvent extends AuthEvent {
   List<Object> get props => [];
 
 }
+
+class LoginFromCacheAuthEvent extends AuthEvent {
+
+  @override
+  List<Object> get props => [];
+}

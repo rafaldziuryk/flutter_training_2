@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:fluttertrainer2/logic/auth/auth_bloc.dart';
 import 'package:fluttertrainer2/logic/auth/auth_event.dart';
 import 'package:fluttertrainer2/logic/auth/bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
