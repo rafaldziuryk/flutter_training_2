@@ -15,17 +15,6 @@ class TryAddNewPost extends AddPostEvent {
   List<Object> get props => [title, body];
 }
 
-class SaveAddNewPost extends AddPostEvent {
-
-  final String title;
-  final String body;
-
-  SaveAddNewPost(this.title, this.body);
-
-  @override
-  List<Object> get props => [title, body];
-}
-
 class SyncAllPosts extends AddPostEvent {
   @override
   List<Object> get props => [];

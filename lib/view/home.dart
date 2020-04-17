@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                     enabled = state.user.hasRole("posts");
                   }
                   return ListTile(
-                      enabled: enabled,
+                      enabled: true,
                       leading: Icon(Icons.insert_drive_file),
                       title: Text("Posty"),
                       onTap: () {
@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                     enabled = state.user.hasRole("add_post");
                   }
                   return ListTile(
-                      enabled: enabled,
+                      enabled: true,
                       leading: Icon(Icons.note_add),
                       title: Text("Dodaj Posta"),
                       onTap: () {
