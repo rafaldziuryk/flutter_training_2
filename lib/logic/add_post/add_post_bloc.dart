@@ -41,7 +41,7 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
       if (state is NeedToSync) {
         if ([ConnectivityResult.mobile, ConnectivityResult.wifi]
             .contains(data)) {
-          add(SyncAllPosts());
+          add(RefreshSyncNeedState());
         }
       }
     });
@@ -54,6 +54,9 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
     if (event is TryAddNewPost) {
       yield* addPost(event.title, event.body);
     } else if (event is SyncAllPosts) {
+      yield AddingNewPost();
+      yield await Future.delayed(Duration(seconds: 1), () => AllSynced());
+    } else if (event is RefreshSyncNeedState) {
       yield await syncIfNeed();
     }
   }

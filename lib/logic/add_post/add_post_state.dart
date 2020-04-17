@@ -24,7 +24,7 @@ class NeedToSync extends AddPostState {
   List<Object> get props => [canSync];
 }
 
-class AllSynced extends AddPostState {
+  class AllSynced extends AddPostState {
 
   @override
   List<Object> get props => [];

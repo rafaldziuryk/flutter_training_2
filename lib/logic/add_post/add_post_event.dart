@@ -19,3 +19,8 @@ class SyncAllPosts extends AddPostEvent {
   @override
   List<Object> get props => [];
 }
+
+class RefreshSyncNeedState extends AddPostEvent {
+  @override
+  List<Object> get props => null;
+}

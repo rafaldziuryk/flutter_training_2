@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertrainer2/logic/add_post/add_post_bloc.dart';
+import 'package:fluttertrainer2/logic/add_post/add_post_event.dart';
+import 'package:fluttertrainer2/logic/add_post/add_post_state.dart';
 import 'package:fluttertrainer2/logic/auth/auth_bloc.dart';
 import 'package:fluttertrainer2/logic/auth/auth_event.dart';
 import 'package:fluttertrainer2/logic/auth/auth_state.dart';
@@ -19,6 +22,23 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("My App"),
+        actions: <Widget>[
+          BlocBuilder<AddPostBloc, AddPostState>(builder: (BuildContext context, AddPostState state) {
+            if (state is AddingNewPost) {
+              return CircularProgressIndicator();
+            } else if (state is AllSynced) {
+              return Icon(Icons.check_circle_outline);
+            } else if (state is NeedToSync) {
+              return IconButton(
+                icon: Icon(state.canSync ? Icons.sync : Icons.sync_disabled),
+                onPressed: state.canSync ? () => BlocProvider.of<AddPostBloc>(context).add(SyncAllPosts()) : null,
+              );
+            } else {
+              return Container();
+            }
+          },
+          )
+        ],
       ),
       body: body(),
       drawer: Drawer(
@@ -59,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                     enabled = state.user.hasRole("posts");
                   }
                   return ListTile(
-                      enabled: true,
+                      enabled: enabled,
                       leading: Icon(Icons.insert_drive_file),
                       title: Text("Posty"),
                       onTap: () {
@@ -77,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                     enabled = state.user.hasRole("add_post");
                   }
                   return ListTile(
-                      enabled: true,
+                      enabled: enabled,
                       leading: Icon(Icons.note_add),
                       title: Text("Dodaj Posta"),
                       onTap: () {
