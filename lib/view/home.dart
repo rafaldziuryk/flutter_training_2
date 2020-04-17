@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertrainer2/logic/auth/auth_bloc.dart';
 import 'package:fluttertrainer2/logic/auth/auth_event.dart';
 import 'package:fluttertrainer2/logic/auth/auth_state.dart';
+import 'package:fluttertrainer2/view/add_post.dart';
 import 'package:fluttertrainer2/view/posts.dart';
 
 class HomePage extends StatefulWidget {
@@ -68,6 +69,24 @@ class _HomePageState extends State<HomePage> {
                         });
                       });
                 },
+              ),
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (BuildContext context, AuthState state) {
+                  bool enabled = false;
+                  if (state is LoggedInAuthState) {
+                    enabled = state.user.hasRole("add_post");
+                  }
+                  return ListTile(
+                      enabled: enabled,
+                      leading: Icon(Icons.note_add),
+                      title: Text("Dodaj Posta"),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        setState(() {
+                          selectedDrawerItem = 2;
+                        });
+                      });
+                },
               )
             ],
           ),
@@ -79,6 +98,7 @@ class _HomePageState extends State<HomePage> {
   Widget body() {
     switch (selectedDrawerItem) {
       case 1: return PostPage();
+      case 2: return AddPostPage();
       default: return Container();
     }
   }
