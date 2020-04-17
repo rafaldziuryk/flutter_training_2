@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 import 'package:fluttertrainer2/logic/add_post/add_post.dart';
+import 'package:fluttertrainer2/logic/db/database.dart';
 
 import './bloc.dart';
 
@@ -16,6 +17,7 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
   Dio dio;
+  MyDatabase database = MyDatabase();
 
   AddPostBloc() {
     BaseOptions options = new BaseOptions(
@@ -55,6 +57,7 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
       yield* addPost(event.title, event.body);
     } else if (event is SyncAllPosts) {
       yield AddingNewPost();
+      List<AddPost> allPosts = await database.getPosts();
       yield await Future.delayed(Duration(seconds: 1), () => AllSynced());
     } else if (event is RefreshSyncNeedState) {
       yield await syncIfNeed();
@@ -88,9 +91,11 @@ class AddPostBloc extends Bloc<AddPostEvent, AddPostState> {
       if (response.data["_meta"]["success"] == true) {
         yield AllSynced();
       } else {
+        await database.createPost(postToAdd);
         yield await needSync();
       }
     } catch (e) {
+      await database.createPost(postToAdd);
       yield await needSync();
     }
   }
